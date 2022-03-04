@@ -1,7 +1,7 @@
 const express = require("express");
 const { graphqlHTTP }  = require('express-graphql');
 const graphqlSchema = require('./graphql/schema');
-const graphqlResolver = require('./graphql/resolvers');
+// const graphqlResolver = require('./graphql/resolvers');
 
 console.log("Hello World");
 
