@@ -2,20 +2,40 @@ const express = require("express");
 const { graphqlHTTP }  = require('express-graphql');
 const graphqlSchema = require('./graphql/schema');
 const graphqlResolver = require('./graphql/resolvers');
+const mongoose = require("mongoose");
 
-console.log("Hello World");
+const MONGODB_URI =
+  `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.hpoep.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}`;
 
-const app = express();
+const port = process.env.PORT || 3000;
 
-app.use('/test', (req, res, next) => {
-    next("Test");
-    // return;
+
+const app = express();  
+
+app.use('/graphql', graphqlHTTP({
+  schema: graphqlSchema,
+  rootValue: graphqlResolver,
+  graphiql: true,
+  customFormatErrorFn(err) {
+    if(!err.originalError) {
+        return err;
+    }
+    const data = err.originalError.data;
+    const message = err.message || 'an error occured';
+    const code = err.statusCode || 500;
+    return {message: message, status: code, data: data};
+  }
+}));
+
+console.log(MONGODB_URI);
+
+mongoose
+  .connect(MONGODB_URI)
+  .then((result) => {
+    // https.createServer({key: privateKey, cert: certificate}, app).listen(port);
+    app.listen(port);
+    console.log("Now Listening On Port 3000");
+  })
+  .catch((error) => {
+    console.log(error);
   });
-
-app.use('/', (req, res, next) => {
-    console.log(req);
-    next("In root");
-  });
-
-
-app.listen(3002);

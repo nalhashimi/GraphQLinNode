@@ -1,0 +1,7 @@
+{
+    "env": {
+        "MONGO_USER": "IceBreaker",
+        "MONGO_PASSWORD": "DadJokes2022!",
+        "MONGO_DEFAULT_DATABASE": "IceBreaker"
+    }
+}

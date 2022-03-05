@@ -9,4 +9,8 @@ module.exports = buildSchema(`
     type RootQuery {
         getStatus: Status!
     }
+
+    schema {
+        query: RootQuery
+    }
 `);
