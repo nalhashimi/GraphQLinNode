@@ -5,7 +5,7 @@ const graphqlResolver = require('./graphql/resolvers');
 const mongoose = require("mongoose");
 
 const MONGODB_URI =
-  `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.hpoep.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}`;
+  `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.mdlr6.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}`;
 
 const port = process.env.PORT || 3000;
 
@@ -14,7 +14,7 @@ const app = express();
 
 app.use('/graphql', graphqlHTTP({
   schema: graphqlSchema,
-  rootValue: graphqlResolver,
+  rootValue: graphqlResolver, 
   graphiql: true,
   customFormatErrorFn(err) {
     if(!err.originalError) {
