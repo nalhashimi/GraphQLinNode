@@ -12,10 +12,14 @@ module.exports = buildSchema(`
 
     type User {
         name: String!
+        email: String!
+        password: String!
     }
 
     input UserInputData {
         name: String!
+        email: String!
+        password: String!
     }
 
     type RootMutation {

@@ -1,5 +1,5 @@
 
-const user = require("../models/user");
+const User = require("../models/user");
 
 module.exports = {
    
@@ -8,6 +8,16 @@ module.exports = {
     },
 
     createUser: async function({userInput}, req) {
-        return {name: 'status got'};
+        const user = new User({
+            name: userInput.name,
+            email: userInput.email,
+            password: userInput.password
+        });
+        await user.save();
+
+        const createdUser = await user.save();
+ console.log({...user._doc, _id: createdUser._id.toString() });
+
+   return {name: userInput.name, email: userInput.email, password: userInput.password};
     }
 }
