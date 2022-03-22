@@ -8,6 +8,9 @@ module.exports = {
     },
 
     createUser: async function({userInput}, req) {
+
+        hashedPassword = User.encryptPassword(userInput.password);
+        console.log(hashedPassword);
         const user = new User({
             name: userInput.name,
             email: userInput.email,
@@ -16,8 +19,14 @@ module.exports = {
         await user.save();
 
         const createdUser = await user.save();
- console.log({...user._doc, _id: createdUser._id.toString() });
 
-   return {name: userInput.name, email: userInput.email, password: userInput.password};
+        return {name: userInput.name, email: userInput.email, password: userInput.password};
+
     }
 }
+
+//mutation {
+    // createUser(userInput: {name: "Test Name2", email: "email2", password: "password2"}) {
+    //     name
+    //     email
+    //   }
