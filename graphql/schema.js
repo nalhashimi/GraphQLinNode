@@ -6,8 +6,14 @@ module.exports = buildSchema(`
         status: String!
     }
 
+    type AuthData {
+        token: String!
+        userId: String!
+    }
+
     type RootQuery {
         getStatus: Status!
+        loginUser(email: String!, password: String!): AuthData!
     }
 
     type User {

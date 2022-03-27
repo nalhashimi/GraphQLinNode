@@ -19,7 +19,7 @@ const userSchema = new Schema({
 });
 
 //research static function in nodejs
-userSchema.statics.encryptPassword = async function (password) {
+userSchema.encryptPassword = async function (password) {
     try{
     var salt = await bcrypt.genSalt(10);
     
@@ -33,6 +33,28 @@ userSchema.statics.encryptPassword = async function (password) {
     
     
 };
+
+userSchema.statics.createUser = async function (userName, userEmail, userPassword) {
+
+    const myUser =mongoose.model("User", userSchema);
+    const hashedPassword = await userSchema.encryptPassword(userPassword);
+    const newUserOne = new myUser ({name: userName, email: userEmail, password: hashedPassword});
+
+
+    console.log(myUser)
+    await newUserOne.save();
+}
+
+userSchema.loginUser = async function (email, password) {
+
+    const foundUser = await User.findOne({email: email});
+    console.log(foundUser);
+
+
+    // bcrypt.compare(password, )
+}
+
+
 
 
 module.exports = mongoose.model("User", userSchema);
