@@ -9,18 +9,27 @@ module.exports = {
 
     createUser: async function({userInput}, req) {
 
-        hashedPassword = User.encryptPassword(userInput.password);
-        console.log(hashedPassword);
-        const user = new User({
-            name: userInput.name,
-            email: userInput.email,
-            password: userInput.password
-        });
-        await user.save();
+        // hashedPassword = User.encryptPassword(userInput.password);
+        // console.log(hashedPassword);
+        // const user = new User({
+        //     name: userInput.name,
+        //     email: userInput.email,
+        //     password: userInput.password
+        // });
+        // await user.save();
 
-        const createdUser = await user.save();
+        // const createdUser = await user.save();
 
-        return {name: userInput.name, email: userInput.email, password: userInput.password};
+        // return {name: userInput.name, email: userInput.email, password: userInput.password};
+
+        return await User.createUser(userInput.name, userInput.email, userInput.password);
+
+    },
+
+    loginUser: async function (email, password) {
+        const user1 = new User();
+        //console.log(user1);
+        return await user1.loginUser(email, password);
 
     }
 }
