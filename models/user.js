@@ -35,26 +35,30 @@ userSchema.encryptPassword = async function (password) {
 };
 
 userSchema.statics.createUser = async function (userName, userEmail, userPassword) {
-
-    const myUser =mongoose.model("User", userSchema);
+    const myUser = mongoose.model("User", userSchema);
     const hashedPassword = await userSchema.encryptPassword(userPassword);
     const newUserOne = new myUser ({name: userName, email: userEmail, password: hashedPassword});
-
-
-    console.log(myUser)
-    await newUserOne.save();
+    try {
+        await newUserOne.save();
+        console.log(newUserOne._id);
+    }
+    catch(error) {
+        console.error(error);
+    }
+    return {id: newUserOne._id.toString()}
 }
 
-userSchema.loginUser = async function (email, password) {
-
-    const foundUser = await User.findOne({email: email});
-    console.log(foundUser);
-
-
-    // bcrypt.compare(password, )
+userSchema.statics.loginUser = async function (email, password) {
+    
+    const foundUser = await this.findOne({email: email});
+    if(!foundUser) {
+        const error = new Error("User not found");
+        error.code = 401;
+        throw error;
+    }
+    return {token: foundUser._id.toString(), userId: foundUser._id.toString()};
+    
 }
-
-
 
 
 module.exports = mongoose.model("User", userSchema);

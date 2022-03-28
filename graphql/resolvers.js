@@ -26,16 +26,13 @@ module.exports = {
 
     },
 
-    loginUser: async function (email, password) {
-        const user1 = new User();
-        //console.log(user1);
-        return await user1.loginUser(email, password);
-
+    loginUser: async function ({email, password}) {
+        let token;
+        try {
+            token = await User.loginUser(email, password);
+        } catch (error) {
+            console.error(error);
+        }
+        return token;
     }
 }
-
-//mutation {
-    // createUser(userInput: {name: "Test Name2", email: "email2", password: "password2"}) {
-    //     name
-    //     email
-    //   }

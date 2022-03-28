@@ -6,6 +6,10 @@ module.exports = buildSchema(`
         status: String!
     }
 
+    type UserId {
+        id: String!
+    }
+
     type AuthData {
         token: String!
         userId: String!
@@ -29,7 +33,7 @@ module.exports = buildSchema(`
     }
 
     type RootMutation {
-        createUser(userInput: UserInputData): User! 
+        createUser(userInput: UserInputData): UserId! 
     }
 
     schema {
