@@ -56,8 +56,22 @@ userSchema.statics.loginUser = async function (email, password) {
         error.code = 401;
         throw error;
     }
-    return {token: foundUser._id.toString(), userId: foundUser._id.toString()};
+
+
+  //async function checkUser(username, password) {
+    //... fetch user from a db etc.
+
+    const match = await bcrypt.compare(password, foundUser.password);
+
+    if(!match) {
+        const error = new Error("Incorrect Password");
+        error.code = 401;
+        throw error;
+    }
+
     
+
+    return {token: foundUser._id.toString(), userId: foundUser._id.toString()};
 }
 
 
