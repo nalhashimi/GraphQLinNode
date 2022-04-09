@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const Schema = mongoose.Schema;
 
@@ -69,9 +70,10 @@ userSchema.statics.loginUser = async function (email, password) {
         throw error;
     }
 
+    const token = jwt.sign({email: foundUser.email, name: foundUser._id.toString()}, 'bunnywabbit')
     
 
-    return {token: foundUser._id.toString(), userId: foundUser._id.toString()};
+    return {token: token, userId: foundUser._id.toString()};
 }
 
 
