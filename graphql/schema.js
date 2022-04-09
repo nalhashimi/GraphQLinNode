@@ -10,6 +10,10 @@ module.exports = buildSchema(`
         id: String!
     }
 
+    type IsTrue {
+        isTrue: Boolean!
+    }
+
     type AuthData {
         token: String!
         userId: String!
@@ -18,6 +22,7 @@ module.exports = buildSchema(`
     type RootQuery {
         getStatus: Status!
         loginUser(email: String!, password: String!): AuthData!
+        resetPassword(email: String!): IsTrue!
     }
 
     type User {

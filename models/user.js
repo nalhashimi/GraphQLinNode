@@ -76,5 +76,29 @@ userSchema.statics.loginUser = async function (email, password) {
     return {token: token, userId: foundUser._id.toString()};
 }
 
+userSchema.statics.resetPassword = async function (email) {
+
+    // const foundResetEmail = await this.findOne({email: email});
+    // if(!foundResetEmail) {
+    //     const error = new Error("No account using this email has been found");
+    //     error.code = 401;
+    //     throw error;
+    // }
+
+    return true;
+
+}
+
 
 module.exports = mongoose.model("User", userSchema);
+
+
+//**Reset Password Flow**
+//Click reset password button. it takes them to a new view
+//Provides to us an email which we use to search DB for user
+//Temporary token can be saved to user profile in DB
+//we send email to user
+//User clicks link from email.
+//We retrieve that token and check it's expiration
+//Redirect user to change password view if token is valid
+//save new password and redirect to login screen

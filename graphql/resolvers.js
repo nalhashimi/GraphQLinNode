@@ -34,5 +34,11 @@ module.exports = {
             console.error(error);
         }
         return token;
+    },
+
+    resetPassword: async function ({email}) {
+
+        return this.resetPassword(email);
+
     }
 }
