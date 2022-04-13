@@ -38,7 +38,7 @@ module.exports = {
 
     resetPassword: async function ({email}) {
 
-        return this.resetPassword(email);
+        return User.resetPassword(email);
 
     }
 }

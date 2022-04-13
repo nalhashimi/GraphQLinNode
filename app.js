@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const MONGODB_URI =
   `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.mdlr6.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}`;
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 
 const app = express();  
@@ -34,7 +34,7 @@ mongoose
   .then((result) => {
     // https.createServer({key: privateKey, cert: certificate}, app).listen(port);
     app.listen(port);
-    console.log("Now Listening On Port 3000");
+    console.log("Now Listening On Port 3001");
   })
   .catch((error) => {
     console.log(error);

@@ -16,7 +16,13 @@ const userSchema = new Schema({
     name: {
         type: String,
         required: true
+    },
+    resetToken: {
+        type: String,
+        required: false
+
     }
+
 });
 
 //research static function in nodejs
@@ -78,14 +84,24 @@ userSchema.statics.loginUser = async function (email, password) {
 
 userSchema.statics.resetPassword = async function (email) {
 
-    // const foundResetEmail = await this.findOne({email: email});
-    // if(!foundResetEmail) {
-    //     const error = new Error("No account using this email has been found");
-    //     error.code = 401;
-    //     throw error;
-    // }
+    const foundResetEmail = await this.findOne({email: email});
+    if(!foundResetEmail) {
+        const error = new Error("No account using this email has been found");
+        error.code = 401;
+        throw error;
+    }
 
-    return true;
+    const {
+        randomBytes
+      } = await import('crypto');
+      
+    const resetToken = await randomBytes(32);
+
+      console.log(`${resetToken.length} bytes of random data: ${resetToken.toString('hex')}`);
+
+  ///create token model and token table. Save user to token table, rather than saving random possibly expired tokens to the user table
+
+    return {isTrue: true};
 
 }
 
