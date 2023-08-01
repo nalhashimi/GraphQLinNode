@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+
+  backend:
+    container_name: IceBreakerBackend
+    build:
+      context: ./IceBreakerBackend
+      dockerfile: Dockerfile
+    volumes:
+      - './IceBreakerBackend:/app'
+      - '/app/node_modules'
+    ports:
+      - 8080:3001
+    environment:
+      - CHOKIDAR_USEPOLLING=true

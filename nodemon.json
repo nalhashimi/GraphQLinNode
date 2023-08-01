@@ -1,7 +1,0 @@
-{
-    "env": {
-        "MONGO_USER": "SuperUser",
-        "MONGO_PASSWORD": "randorandorando",
-        "MONGO_DEFAULT_DATABASE": "IceBreaker"
-    }
-}
