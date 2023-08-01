@@ -2,11 +2,11 @@ const express = require("express");
 const { graphqlHTTP }  = require('express-graphql');
 const graphqlSchema = require('./graphql/schema');
 const graphqlResolver = require('./graphql/resolvers');
+require('dotenv').config();
 const mongoose = require("mongoose");
 
 const MONGODB_URI =
-  `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.hpoep.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}`;
-
+  `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGODB_URI}/${process.env.MONGO_DEFAULT_DATABASE}`;
 const port = process.env.PORT || 3001;
 
 
