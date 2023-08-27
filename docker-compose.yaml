@@ -6,7 +6,7 @@ services:
     container_name: IceBreakerBackend
     build:
       context: ./IceBreakerBackend
-      dockerfile: Dockerfile
+      dockerfile: ./Dockerfile
     volumes:
       - './IceBreakerBackend:/app'
       - '/app/node_modules'
