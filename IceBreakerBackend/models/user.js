@@ -20,7 +20,10 @@ const userSchema = new Schema({
     resetToken: {
         type: String,
         required: false
-
+    },
+    tokenExpirationDate: {
+        type: Number,
+        required: false
     }
 
 });
@@ -82,10 +85,10 @@ userSchema.statics.loginUser = async function (email, password) {
     return {token: token, userId: foundUser._id.toString()};
 }
 
-userSchema.statics.resetPassword = async function (email) {
+userSchema.statics.createResetPasswordToken = async function (email) {
 
-    const foundResetEmail = await this.findOne({email: email});
-    if(!foundResetEmail) {
+    const foundUser = await this.findOne({email: email});
+    if(!foundUser) {
         const error = new Error("No account using this email has been found");
         error.code = 401;
         throw error;
@@ -96,13 +99,43 @@ userSchema.statics.resetPassword = async function (email) {
       } = await import('crypto');
       
     const resetToken = await randomBytes(32);
+    const tokenExpirationDate = await Date.now() + 144000000;  ///date.now creates int
 
-      console.log(`${resetToken.length} bytes of random data: ${resetToken.toString('hex')}`);
-
-  ///create token model and token table. Save user to token table, rather than saving random possibly expired tokens to the user table
+    try {
+        foundUser.resetToken = resetToken.toString('hex'); 
+        foundUser.tokenExpirationDate = tokenExpirationDate;   
+        foundUser.save();
+    }
+    catch(error) {
+        console.log(error); 
+    }
 
     return {isTrue: true};
+ 
+}
 
+userSchema.statics.resetUserPassword = async function (resetToken, newPassword) {
+    const dateNow = await Date.now();
+    const foundUser = await this.findOne({resetToken: resetToken});
+    const newHashedPassword = await userSchema.encryptPassword(newPassword);
+
+    try {
+        if (foundUser.tokenExpirationDate >= dateNow)
+        {
+        foundUser.password = newHashedPassword;
+        foundUser.save();
+        }
+        else {
+            console.log("bananas");
+            return {isTrue: false};
+        }
+        
+    } 
+    catch(error) {
+        console.log(error);
+    }
+
+    return {isTrue: true};
 }
 
 

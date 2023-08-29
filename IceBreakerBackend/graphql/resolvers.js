@@ -36,9 +36,15 @@ module.exports = {
         return token;
     },
 
-    resetPassword: async function ({email}) {
+    createResetPasswordToken: async function ({email}) {
 
-        return User.resetPassword(email);
+        return User.createResetPasswordToken(email);
+
+    },
+
+    resetUserPassword: async function ({resetToken, newPassword}) {
+
+        return User.resetUserPassword(resetToken, newPassword);
 
     }
 }

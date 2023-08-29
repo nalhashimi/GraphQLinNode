@@ -22,7 +22,8 @@ module.exports = buildSchema(`
     type RootQuery {
         getStatus: Status!
         loginUser(email: String!, password: String!): AuthData!
-        resetPassword(email: String!): IsTrue!
+        createResetPasswordToken(email: String!): IsTrue!
+        resetUserPassword(resetToken: String!, newPassword: String!): IsTrue!
     }
 
     type User {
